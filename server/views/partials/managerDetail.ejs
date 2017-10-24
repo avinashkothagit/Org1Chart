@@ -1,0 +1,10 @@
+<div id="managerDetail" ng-show="!listToggleFlag">
+    <ul class="reporting-structure">
+        <li ng-repeat="manager in employee.reportsTo track by $index">
+            <i animate-on-photo="{{manager.photo.largePhotoUrl}}" ng-click="getEmployee(manager)"
+               class="manager-image shadow animated bounceInUp"></i>
+
+            <p class="name animated bounceInUp">{{manager.name}}</p>
+        </li>
+    </ul>
+</div>

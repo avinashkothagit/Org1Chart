@@ -1,0 +1,18 @@
+<div id="searchWrapper" ng-if="!listToggleFlag && searchFlag" ng-controller="searchController">
+    <div id="searchBoxWrapper">
+        <input id="searchBox" search-watch ng-model="queryString" placeholder="Enter a name"/>
+    </div>
+
+    <div id="searchResultWrapper" class="hide animated bounceUp">
+        <div id="searchResultWrapper_row">
+            <ul>
+                <li ng-repeat="searchs in reduceSearchResults(search)" ng-click="searchClick(searchs);">
+                    <span ng-bind-html="searchs.name">{{searchs.name}}</span>
+                </li>
+                <li ng-if="ellipsisFlag">
+                    <span>...</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+<div id="employeeDetail" ng-class="initialLoadFlag ? 'fadeIt' : 'unfadeIt'">
+    <!--  The fade and unfade are part of the 7.0.6 manager scroll bug fix  -->
+    <div class="employee" id="employeeFocus" ng-class="{employeeFocusListView : listToggleFlag}">
+        <svg width="300" height="101" viewBox="0 0 300 101" xmlns="http://www.w3.org/2000/svg"
+             style="position: absolute; left: 50%; top: -27px; margin-left: -150px;">
+            <path d="M0 28h80.153C103.513 28 115 .948 150.148.948S196.874 28 220.193 28H300v45h-79.672c-23.393 0-35.032 27.905-70.18 27.905C115 100.905 103.52 73 80.208 73H0V28z"
+                  fill="#F5F5F5"/>
+        </svg>
+
+        <div id="employeeStrip">
+            <div id="employeeLeftIcons">
+                <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" id="employeeCall"
+                     class="icon-utility-call" ng-click="togglePhoneSelector()">
+                    <path fill-opacity="0" fill="#fff" d="M0 0h44v44H0z"/>
+                    <path d="M33 13.623c0-.05-.026-.128-.05-.18-.026-.1-.128-.202-.23-.253l-5.45-2.165c-.228-.076-.483.026-.585.23l-3.005 6.01c-.1.177-.05.38.077.534l2.928 2.92c-1.502 2.42-3.54 4.48-5.958 5.982l-2.927-2.95c-.154-.128-.358-.18-.536-.078l-6.01 3.006c-.203.103-.305.358-.23.587l2.166 5.45c.05.1.127.203.254.253.05.027.128.027.18.027.05 0 .1 0 .177-.027 9.99-1.247 17.93-9.166 19.18-19.173.03-.075.03-.125.03-.176z"
+                          fill="#2A94D6"/>
+                </svg>
+            </div>
+            <div id="employeeRightIcons">
+                <a href="mailto:{{employee.email}}" target="_top">
+                    <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"
+                         id="employeeEmail" class="icon-utility-email">
+                        <path fill-opacity="0" fill="#fff" d="M0 0h44v44H0z"/>
+                        <path d="M22 23.625l11-8.25C33 14.61 32.39 14 31.625 14h-19.25C11.61 14 11 14.61 11 15.375l11 8.25zm0 2.47l-11-8.25v11.28c0 .764.61 1.375 1.375 1.375h19.25c.764 0 1.375-.61 1.375-1.375v-11.28l-11 8.25z"
+                              fill="#2A94D6"/>
+                    </svg>
+                </a>
+            </div>
+            <div id="peersIcons">
+                <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" ng-show="hasPeer()"
+                     ng-click="getLeftPeer();"
+                     class="icon-utility-left" style="float: left;">
+                    <path d="M-39-.905h80.153c23.36 0 34.847-27.052 69.995-27.052S157.874-.905 181.193-.905H261v45h-79.672c-23.393 0-35.032 27.905-70.18 27.905C76 72 64.52 44.095 41.208 44.095H-39v-45z"
+                          fill="#F5F5F5"/>
+                    <path fill-opacity="0" fill="#fff" d="M0 .022h44v44H0z"/>
+                    <path d="M26 14.022l-8 8 8 8" stroke="#979797" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" fill="none"/>
+                </svg>
+                <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" ng-show="hasPeer()"
+                     ng-click="getRightPeer();"
+                     class="icon-utility-right" style="float: right;">
+                    <path d="M-214-.905h80.153c23.36 0 34.847-27.052 69.995-27.052S-17.126-.905 6.193-.905H86v45H6.328C-17.065 44.095-28.704 72-63.852 72-99 72-110.48 44.095-133.792 44.095H-214v-45z"
+                          fill="#F5F5F5"/>
+                    <path fill-opacity="0" fill="#fff" d="M0 0h44v44H0z"/>
+                    <path d="M18 14l8 8-8 8" stroke="#979797" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" fill="none"/>
+                </svg>
+            </div>
+        </div>
+        <div id="swipePad" ng-swipe-right="getLeftPeer();" ng-swipe-left="getRightPeer();">
+            <i class="animated employee-image shadow" animate-on-photo="{{employee.photo.largePhotoUrl}}"
+               animate-name="bounceIn" ng-click="employeeFocusDetail(listToggleFlag);"></i>
+        </div>
+
+        <p class="name">{{employee.name}}</p>
+
+        <p ng-if="!listToggleFlag" class="main-title" data-ellipsis data-ng-bind="employeeTitle"></p>
+
+        <p ng-if="hasReports() && !listToggleFlag" ng-click="toggleListView();" class="title tog">List reports</p>
+
+        <p ng-click="toggleListView();" ng-if="listToggleFlag" class="title toggle">Back</p>
+
+        <div class="reports-wrapper" ng-if="!listToggleFlag">
+            <ul class="reports list-horizontal list-plain expand" ng-class="hasOverflow(employee.directReports.length)">
+                <li ng-repeat="report in employee.directReports | limitTo: 8">
+                    <a>
+                        <span>
+                            <i class="report-image shadow animated" animate-on-photo="{{report.photo.smallPhotoUrl}}"
+                               animate-name="fadeIn" ng-click="getEmployee(report)"></i>
+                        </span>
+                    </a>
+                </li>
+                <li ng-if="showReportsString()" class="reports-count" ng-click="toggleListView();">
+                    <a>
+                        <span>{{employee.directReports.length - 8}}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

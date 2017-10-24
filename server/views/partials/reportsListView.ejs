@@ -1,0 +1,14 @@
+<div id="reportsListView" ng-show="listToggleFlag">
+    <ul>
+        <li ng-repeat="report in employee.directReports" ng-click="getEmployee(report); toggleListView();">
+            <i class="report-image shadow animated" animate-on-photo="{{report.photo.smallPhotoUrl}}"
+               animate-name="fadeIn"></i>
+
+            <div>
+                <p class="name">{{report.name}}</p>
+
+                <p class="title">{{report.title}}</p>
+            </div>
+        </li>
+    </ul>
+</div>

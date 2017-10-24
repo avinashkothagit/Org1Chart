@@ -1,0 +1,28 @@
+<div id="phoneSelector" ng-class="phoneSelectorFlag ? 'showFlex' : 'hide'">
+    <div id="selectorRow">
+        <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" id="closeSelector"
+             class="icon-utility-close show" ng-click="togglePhoneSelector();">
+            <path d="M28 16.353L26.647 15 21.5 20.147 16.353 15 15 16.353l5.147 5.147L15 26.647 16.353 28l5.147-5.147L26.647 28 28 26.647 22.853 21.5 28 16.353z"
+                  fill="#fff"/>
+        </svg>
+
+        <ul class="selection">
+            <li ng-repeat="phone in employee.phones | limitTo: 4" ng-click="callEmployee(phone.value)">
+                <span class="capitalize">{{phone.type}}:</span> {{phone.value}}
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div id="expiredTokenOverlay" ng-class="expiredTokenFlag ? 'showFlex' : 'hide'">
+    <div id="selectorRow">
+        <p id="expiredTokenMessage">
+            It looks like your access token may have expired.<br><br>Wanna try refreshing it?
+        </p>
+        <ul class="selection">
+            <li ng-click="sendTokenExpired();">
+                <span>Yes, please!</span>
+            </li>
+        </ul>
+    </div>
+</div>

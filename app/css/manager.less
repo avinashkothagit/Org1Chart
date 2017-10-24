@@ -1,0 +1,77 @@
+// This section controls the animation sequence
+// for the managers on display.
+//
+
+#managerDetail {
+  background-color: #FFFFFF;
+  text-align: center;
+  width: 100%;
+  overflow-y: scroll;
+  height: 325px;
+  height: ~"calc(100% - 180px)"; // has to be escaped to prevent LESS from screwing it up.
+  position: absolute;
+  // The following line is key to protect z-order
+  // for transformed elements
+  transform: translate3D(0px,0px,-1px) rotateX(180deg);
+}
+
+.manager-image {
+  height: 60px;
+  width: 60px;
+  background-size: 60px;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  display: inline-block;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+// The spacing of the managers, and
+// the lines that connect the li elements
+.reporting-structure {
+  // The following line is key to protect z-order
+  // for transformed elements
+  transform: translate3D(0px,0px,-1px) rotateX(180deg);
+  position: absolute;
+  width: 100%;
+  padding-bottom: 50px;
+}
+.reporting-structure li {
+  margin: 30px auto;
+  position: relative;
+}
+
+// add connectors to before every li except for the first
+// add a connector bar on the last list item
+// the animation fadeIn is located in the animations less file
+.reporting-structure li::before,
+.reporting-structure li:nth-last-child(1)::after {
+  animation: fadeIn 5s 0 1 ease normal;
+  content: '';
+  position: absolute;
+  top: -62px;
+  left: 50%;
+  width: 2px;
+  height: 70px;
+  background: #eee;
+  z-index: -1;
+}
+.reporting-structure li:nth-last-child(1)::after{
+  top: 62px;
+}
+
+// hide the bar on the first item
+.reporting-structure li:first-child::before {
+  display: none;
+}
+
+// The delay sequence for the list elements
+// Animation loop
+@n: 20; //number of iterations
+.loop (@i) when (@i < @n + 1) {
+
+  .reporting-structure li:nth-last-child(@{i})  i,
+  .reporting-structure li:nth-last-child(@{i})  p        { animation-delay: (.04s * (@i - 1)); }
+  .loop(@i + 1);
+}
+.loop(1);

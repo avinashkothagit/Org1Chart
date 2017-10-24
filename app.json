@@ -1,0 +1,12 @@
+{
+  "name": "Org Chart",
+  "description": "An SF1 application that gives a graphical representation of an Org's employee hierarchy",
+  "repository": "https://github.com/salesforce-it/Salesforce-OrgChart",
+  "keywords": ["Salesforce", "Org", "Chart", "Node"],
+  "success_url": "/welcome",
+  "logo": "http://andybean.com/salesforce/Org%20Chart%20Icon%20for%20Heroku.png",
+  "addons": [
+    "heroku-postgresql:hobby-dev",
+    "herokuconnect"
+  ]
+}

@@ -1,0 +1,422 @@
+// Path inspired animation sequence
+// from the the incredible work of 
+// http://sparanoid.com/
+// Tunghsiao Liu
+
+
+
+@d1: (@r * 0);
+@d2: (@r * 1);
+@d3: (@r * 2);
+@d4: (@r * 3);
+@d5: (@r * 4);
+@d6: (@r * 5);
+@d7: (@r * 6);
+@d8: (@r * 7);
+@d9: (@r * 8);
+
+@r: 15deg;
+@n: 8;
+
+.employee-image,
+.report-image {
+  height: 100px;
+  width: 100px;
+  background-size: 100px;
+  position: relative;
+  z-index: 3;
+  margin: 0px auto;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  display: inline-block;
+  background-position: center;
+  background-color: #FFF;
+  background-repeat: no-repeat;
+}
+
+.report-image {
+  border-width: 1px;
+}
+
+.employee-image {
+  border: 2px solid #8D3EEA;
+}
+
+#swipePad {
+  height: 100px;
+  width: 100%;
+  margin: -26px auto 2px auto;
+  z-index: 10;
+}
+
+.peer-indicator {
+  margin: 0 auto;
+  width: 123px;
+}
+
+.report-image {
+  height: 30px;
+  width: 30px;
+  background-size: 30px;
+  margin: 0;
+}
+
+#employeeDetail {
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 5;
+  height: 200px;
+}
+
+#employeeStrip {
+  width: 100%;
+  height: 46px;
+  margin: 0;
+  background: #f5f5f5;
+  border-width: 1px 0 1px 0;
+  position: absolute;
+  font-size: 18pt;
+  top: 0;
+}
+
+#employeeStrip a,
+#employeeStrip i {
+  width: 44px;
+  height: 44px;
+  color: #293f54;
+  display: inline-block;
+  line-height: 44px;
+}
+
+#employeeLeftIcons,
+#employeeRightIcons {
+  margin: 0 10px;
+}
+
+#employeeLeftIcons {
+  float: left;
+}
+
+#employeeLeftIcons a {
+  text-decoration: none;
+}
+
+#employeeRightIcons {
+  float: right;
+}
+
+#employeeEmail {
+  display: block;
+}
+
+#peersIcons {
+  width: 185px;
+  margin: 0 auto;
+  i {
+    color: #ccc;
+    font-size: 14pt;
+  }
+}
+
+.name,
+.title {
+  color: #2A94D6;
+  z-index: 999;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 200px;
+  margin: 0 auto;
+  text-overflow: ellipsis;
+}
+
+.title {
+  color: #999;
+  font-size: .8em;
+}
+
+.main-title {
+  overflow: hidden;
+  max-height: 40px;
+  width: 180px;
+  margin: 0 auto;
+  height: 40px;
+  font-size: .8em;
+}
+
+.feedback {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: initial;
+  text-align: right;
+}
+
+// TODO: needs refactor to turn back into Less functions
+// Gah... 
+
+.reports {
+  background: #fff;
+  list-style-type: none;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  top: -270px;
+}
+.reports li {
+  margin: 0 0 0 -15px;
+  padding: 0;
+  border: 0;
+  position: absolute;
+  height: 170px;
+  width: 30px;
+  transform-origin: 15px bottom;
+}
+
+.reports li span {
+  transition: transform .4s ease;
+  display: block;
+  margin: 0;
+}
+
+.reports>li a {
+  position: absolute;
+  display: block;
+  width: 30px;
+  height: 30px;
+  overflow: visible;
+  text-align: center;
+  border-radius: 50%;
+}
+
+.reports>li:nth-of-type(1) { transform: rotate(-108deg); }
+.reports>li:nth-of-type(2) { transform: rotate(-126deg); }
+.reports>li:nth-of-type(3) { transform: rotate(-144deg); }
+.reports>li:nth-of-type(4) { transform: rotate(-162deg); }
+.reports>li:nth-of-type(5) { transform: rotate(-180deg); }
+.reports>li:nth-of-type(6) { transform: rotate(-198deg); }
+.reports>li:nth-of-type(7) { transform: rotate(-216deg); }
+.reports>li:nth-of-type(8) { transform: rotate(-234deg); }
+.reports>li:nth-of-type(9) { transform: rotate(-252deg); }
+
+//    custom styling for the First LI and the last LI
+.reports.expand li:nth-of-type(9) a {
+  line-height: 22px;
+  text-align: center;
+  background: rgba(42, 148, 214, 0.5);
+  border: 4px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  font-size: .7em;
+  ::before {
+    content: '+';
+    margin-right: 2px;
+  }
+}
+
+//    Set the rotation to square off the span AND
+//    add a rotation animation for entry 
+.reports.expand li:nth-of-type(1) a span {
+  transform: rotate(108deg);
+//    disable spin for reports count
+//    animation: spin1-expand .6s ease-out 1 backwards;
+}
+.reports.expand li:nth-of-type(2) a span {
+  transform: rotate(126deg);
+  animation: spin2-expand .6s ease-out 1 backwards;
+}
+.reports.expand li:nth-of-type(3) a span {
+  transform: rotate(144deg);
+  animation: spin3-expand .6s ease-out 1 backwards;
+}
+.reports.expand li:nth-of-type(4) a span {
+  transform: rotate(162deg);
+  animation: spin4-expand .6s ease-out 1 backwards;
+}
+.reports.expand li:nth-of-type(5) a span {
+  transform: rotate(180deg);
+  animation: spin5-expand .6s ease-out 1 backwards;
+}
+.reports.expand li:nth-of-type(6) a span {
+  transform: rotate(198deg);
+  animation: spin6-expand .6s ease-out 1 backwards;
+}
+.reports.expand li:nth-of-type(7) a span {
+  transform: rotate(216deg);
+  animation: spin7-expand .6s ease-out 1 backwards;
+}
+.reports.expand li:nth-of-type(8) a span {
+  transform: rotate(234deg);
+  animation: spin8-expand .6s ease-out 1 backwards;
+}
+.reports.expand li:nth-of-type(9) a span {
+  transform: rotate(252deg);
+  animation: spin9-expand .6s ease-out 1 backwards;
+}
+
+@keyframes spin1-expand {
+  0%    { transform: rotate(108deg);  }
+  60%   { transform: rotate(-252deg); }
+  100%  { transform: rotate(-252deg); }
+}
+@keyframes spin2-expand {
+  0%    { transform: rotate(126deg);  }
+  60%   { transform: rotate(-234deg); }
+  100%  { transform: rotate(-234deg); }
+}
+@keyframes spin3-expand {
+  0%    { transform: rotate(144deg);  }
+  60%   { transform: rotate(-216deg); }
+  100%  { transform: rotate(-216deg); }
+}
+@keyframes spin4-expand {
+  0%    { transform: rotate(162deg);  }
+  60%   { transform: rotate(-198deg); }
+  100%  { transform: rotate(-198deg); }
+}
+@keyframes spin5-expand {
+  0%    { transform: rotate(180deg);  }
+  60%   { transform: rotate(-180deg); }
+  100%  { transform: rotate(-180deg); }
+}
+@keyframes spin6-expand {
+  0%    { transform: rotate(198deg);  }
+  60%   { transform: rotate(-162deg); }
+  100%  { transform: rotate(-162deg); }
+}
+@keyframes spin7-expand {
+  0%    { transform: rotate(216eg);   }
+  60%   { transform: rotate(-144deg); }
+  100%  { transform: rotate(-144deg); }
+}
+@keyframes spin8-expand {
+  0%    { transform: rotate(234deg);  }
+  60%   { transform: rotate(-126deg); }
+  100%  { transform: rotate(-126deg); }
+}
+@keyframes spin9-expand {
+  0%    { transform: rotate(252deg);  }
+  60%   { transform: rotate(-108deg); }
+  100%  { transform: rotate(-108deg); }
+}
+.reports li a {
+  top: 165px;
+  animation: contract 0.35s ease-out 1 backwards;
+}
+.reports.expand li a {
+  /* top of 10 to overshoot expansion*/
+  top: 10px;
+  animation: expand .6s ease 1 backwards;
+}
+
+@keyframes expand {
+  0% {
+    top: 165px;
+  }
+  50% {
+    top: -10px;
+  }
+  70% {
+    top: 15px;
+  }
+  100% {
+    top: 10px;
+  }
+}
+
+@keyframes contract {
+  0% {
+    top: 10px;
+  }
+  40% {
+    top: -25px;
+  }
+  100% {
+    top: 165px;
+  }
+}
+
+.reports li:nth-of-type(1) a            { animation-delay: 0.32s; }
+.reports li:nth-of-type(2) a            { animation-delay: 0.28s; }
+.reports li:nth-of-type(3) a            { animation-delay: 0.24s; }
+.reports li:nth-of-type(4) a            { animation-delay: 0.20s; }
+.reports li:nth-of-type(5) a            { animation-delay: 0.16s; }
+.reports li:nth-of-type(6) a            { animation-delay: 0.12s; }
+.reports li:nth-of-type(7) a            { animation-delay: 0.08s; }
+.reports li:nth-of-type(8) a            { animation-delay: 0.04s; }
+.reports li:nth-of-type(9) a            { animation-delay: 0s;    }
+.reports.expand li:nth-of-type(1) a     { animation-delay: 0s;    }
+.reports.expand li:nth-of-type(2) a     { animation-delay: 0.04s; }
+.reports.expand li:nth-of-type(3) a     { animation-delay: 0.08s; }
+.reports.expand li:nth-of-type(4) a     { animation-delay: 0.12s; }
+.reports.expand li:nth-of-type(5) a     { animation-delay: 0.16s; }
+.reports.expand li:nth-of-type(6) a     { animation-delay: 0.20s; }
+.reports.expand li:nth-of-type(7) a     { animation-delay: 0.24s; }
+.reports.expand li:nth-of-type(8) a     { animation-delay: 0.28s; }
+.reports.expand li:nth-of-type(9) a     { animation-delay: 0.32s; }
+
+// List view of employees
+#reportsListView {
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  top: 150px;
+  left: 0;
+  position: fixed;
+  overflow-y: scroll; //must be scroll for the momentum scrolling to work
+  -webkit-overflow-scrolling: touch; //key for momentum scrolling
+
+  // Hack to address some wierd issue with the last report being cut off on
+  // list view
+  ul {
+    margin-bottom: 170px;
+  }
+  li {
+    text-align: left;
+    cursor: pointer;
+    clear: both;
+    border-top: 1px solid #dadee2;
+    height: 45px;
+    padding: 0 10px;
+    :first-child {
+      border-top: none;
+    }
+    i {
+      float: left;
+      margin: 12px 12px 8px 2px;
+    }
+    div {
+      float: left;
+      margin: 10px 10px 10px 5px;
+    }
+  }
+  .name,
+  .title {
+    width: 240px;
+  }
+}
+
+.tog {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  text-align: left;
+}
+
+.toggle {
+  position: absolute;
+  left: 10px;
+  top: 70px;
+  text-align: left;
+}
+
+.listViewBackground {
+}
+
+.employeeFocusListView {
+  top: 40px !important;
+  position: fixed !important;
+  width: 100% !important;
+}
